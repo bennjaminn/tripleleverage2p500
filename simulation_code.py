@@ -34,10 +34,10 @@ historical_data['net_Change'] = 1 + historical_data['PC_Change']
 price_changes = historical_data['net_Change'].to_numpy()
 
 #simulated days
-num_series = 1000
+num_series = 100000
 num_draws = 1000
 
-simulations = np.zeros((num_draws, num_series))
+simulations = np.zeros((num_series, num_draws))
 
 for series_i in range(num_series):
     random_draws = np.random.choice(price_changes, size=num_draws, replace=True)
