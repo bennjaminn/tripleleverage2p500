@@ -1,5 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
+import pandas as pd
 import yfinance as yf
 from datetime import datetime, timedelta
 
@@ -18,19 +19,21 @@ historical_data = ticker.history(
     interval="1d"
 )
 
+historical_data['PC_Change'] = (
+    (historical_data['Close'] - historical_data['Open'])
+    / historical_data['Open'] * 3
+)
+
 # Extracting Open and Close prices
-open_close_prices = historical_data[['Open', 'Close']]
-
-print(open_close_prices)
-
+pc_changes = historical_data['PC_Change'].to_numpy()
 
 #simulated days
 num_series = 1000
 num_draws = 1000
 
-df = pd.DataFrame()
+simulations = np.zeros((num_draws, num_series))
 
-for series_id in range(num_series):
-    random_draws = np.random.choice(sp500_data['Percent_Change'], size = num_draws, replace = True)
-    series_name = f'Series_{series_id + 1}'
-    df[series_name] = random_draws
+for series_i in range(num_series):
+    random_draws = np.random.choice(pc_changes, size=num_draws, replace=True)
+    simulations[series_i] = random_draws
+
