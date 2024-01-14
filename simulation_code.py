@@ -22,3 +22,15 @@ historical_data = ticker.history(
 open_close_prices = historical_data[['Open', 'Close']]
 
 print(open_close_prices)
+
+
+#simulated days
+num_series = 1000
+num_draws = 1000
+
+df = pd.DataFrame()
+
+for series_id in range(num_series):
+    random_draws = np.random.choice(sp500_data['Percent_Change'], size = num_draws, replace = True)
+    series_name = f'Series_{series_id + 1}'
+    df[series_name] = random_draws
