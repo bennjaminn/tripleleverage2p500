@@ -24,6 +24,11 @@ historical_data['PC_Change'] = (
     / historical_data['Open'] * 3
 )
 
+historical_data['net_Change'] = 1 + historical_data['PC_Change']
+
+# if there is a 5% change instead of doing (100*.05) + 100 we just do 100 * 1.05
+# so if we have an series of 5%, 2%, -1%, -5% the values in the series is 1.05, 1.02, -.99, -.95 and then we can just multiply all of these values together 1.05 * 1.02 * -.99 * -.95 * 100 to see the cumulative percent change on 100$
+
 # Extracting Open and Close prices
 pc_changes = historical_data['PC_Change'].to_numpy()
 
