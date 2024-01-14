@@ -43,3 +43,4 @@ for series_i in range(num_series):
     random_draws = np.random.choice(price_changes, size=num_draws, replace=True)
     simulations[series_i] = random_draws
     
+np.save("simulations", simulations)
