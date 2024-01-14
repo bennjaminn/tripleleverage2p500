@@ -34,7 +34,7 @@ historical_data['net_Change'] = 1 + historical_data['PC_Change']
 price_changes = historical_data['net_Change'].to_numpy()
 
 #simulated days
-num_series = 100000
+num_series = 1000000
 num_draws = 1000
 
 simulations = np.zeros((num_series, num_draws))
@@ -44,3 +44,7 @@ for series_i in range(num_series):
     simulations[series_i] = random_draws
     
 np.save("simulations", simulations)
+
+row_products = np.prod(simulations, axis = 1)
+row_products = (row_products - 1) * 100
+print(row_products.max())
