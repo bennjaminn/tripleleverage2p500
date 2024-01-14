@@ -20,8 +20,9 @@ historical_data = ticker.history(
 )
 
 historical_data['PC_Change'] = (
-    (historical_data['Close'] - historical_data['Open'])
-    / historical_data['Open'] * 3
+        (historical_data['Close'] - historical_data['Open'])
+        / historical_data['Open']
+        * 3
 )
 
 historical_data['net_Change'] = 1 + historical_data['PC_Change']
@@ -30,7 +31,7 @@ historical_data['net_Change'] = 1 + historical_data['PC_Change']
 # so if we have an series of 5%, 2%, -1%, -5% the values in the series is 1.05, 1.02, -.99, -.95 and then we can just multiply all of these values together 1.05 * 1.02 * -.99 * -.95 * 100 to see the cumulative percent change on 100$
 
 # Extracting Open and Close prices
-pc_changes = historical_data['PC_Change'].to_numpy()
+price_changes = historical_data['net_Change'].to_numpy()
 
 #simulated days
 num_series = 1000
@@ -39,6 +40,6 @@ num_draws = 1000
 simulations = np.zeros((num_draws, num_series))
 
 for series_i in range(num_series):
-    random_draws = np.random.choice(pc_changes, size=num_draws, replace=True)
+    random_draws = np.random.choice(price_changes, size=num_draws, replace=True)
     simulations[series_i] = random_draws
-
+    
