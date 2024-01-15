@@ -45,28 +45,32 @@ for series_i in range(num_series):
     
 np.save("simulations", simulations)
 
-row_products = np.prod(simulations, axis = 1)
-row_products = (row_products - 1) * 100
-print(row_products.max())
+# row_products = np.prod(simulations, axis = 1)
+# row_products = (row_products - 1) * 100
+# print(row_products.max())
 
 
 
 # to simulate doubling down your investment:
 # Function to simulate the effect on investment
 def simulate_investment(initial_investment, percent_changes, doubling_down_threshold):
+    doubling_down_threshold += 1
     investment = initial_investment
-    values = [investment]
-    #double_down_count = 0
-    for percent_change in percent_changes:
+    values = np.zeros(len(percent_changes) + 1)
+    values[0] = investment
+    double_down_count = 0
+    
+    for i in range(percent_changes.shape[0]):
+        percent_change = percent_changes[i]
         investment *= percent_change
-
-        if percent_change < 1 + doubling_down_threshold:
+        
+        if percent_change < doubling_down_threshold:
             # Double down on the investment
             investment += initial_investment
-            #double_down_count += 1
-
-        values.append(investment)
-
+            double_down_count += 1
+        
+        values[i+1] = investment
+    
     return values
 
 # Parameters
