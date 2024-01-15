@@ -60,7 +60,7 @@ def simulate_investment(initial_investment, percent_changes, doubling_down_thres
     for percent_change in percent_changes:
         investment *= percent_change
 
-        if percent_change < -doubling_down_threshold:
+        if percent_change < 1 + doubling_down_threshold:
             # Double down on the investment
             investment += initial_investment
             #double_down_count += 1
@@ -71,7 +71,7 @@ def simulate_investment(initial_investment, percent_changes, doubling_down_thres
 
 # Parameters
 initial_investment = 100
-doubling_down_threshold = 0.2  # Example threshold for doubling down on losses
+doubling_down_threshold = -0.2  #threshold for doubling down on losses
 
 # Simulate the effect on investment for each series
 simulated_investments = []
